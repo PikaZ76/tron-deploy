@@ -8,9 +8,9 @@ services:
       - "8090:8090"
       - "8545:8545"
     volumes:
-      - /mnt/data-pool/share/tron/output-directory:/java-tron/output-directory
-      - /mnt/data-pool/share/tron/logs:/java-tron/logs
-      - /mnt/data-pool/share/tron/config:/java-tron/config
+      - /tron/output-directory:/java-tron/output-directory
+      - /tron/logs:/java-tron/logs
+      - /tron/config:/java-tron/config
     command:
       - -jvm
       - "{-Xmx64g -Xms32g -XX:+UseConcMarkSweepGC}"  # Using environment variable for JVM arguments
@@ -18,35 +18,19 @@ services:
       - /java-tron/config/main_net_config.conf
 
   tron-node2:
-    container_name: tron-node2
+    container_name: tron-node2-read-only
     image: tronprotocol/java-tron:latest  # Add specific tag if needed
     mem_limit: 64g
     ports:
       - "28090:8090"
       - "28545:8545"
     volumes:
-      - /mnt/data-pool/share/tron2/output-directory:/java-tron/output-directory
-      - /mnt/data-pool/share/tron2/logs:/java-tron/logs
-      - /mnt/data-pool/share/tron2/config:/java-tron/config
+      - /tron2/output-directory:/java-tron/output-directory
+      - /tron2/logs:/java-tron/logs
+      - /tron2/config:/java-tron/config
     command:
       - -jvm
       - "{-Xmx64g -Xms32g -XX:+UseConcMarkSweepGC}"  # Using environment variable for JVM arguments
       - -c
       - /java-tron/config/main_net_config.conf
     
-  # tron-node-readonly:
-  #   container_name: tron-node3-readonly
-  #   image: tronprotocol/java-tron:latest  # Add specific tag if needed
-  #   mem_limit: 32g
-  #   ports:
-  #     - "28090:38090"
-  #     - "28545:38545"
-  #   volumes:
-  #     - /mnt/data-pool/share/tron2/output-directory:/java-tron/output-directory:ro
-  #     - /mnt/data-pool/share/tron3/logs:/java-tron/logs
-  #     - /mnt/data-pool/share/tron3/config:/java-tron/config
-  #   command:
-  #     - -jvm
-  #     - "{-Xmx32g -Xms32g -XX:+UseConcMarkSweepGC}"  # Using environment variable for JVM arguments
-  #     - -c
-  #     - /java-tron/config/main_net_config.conf
